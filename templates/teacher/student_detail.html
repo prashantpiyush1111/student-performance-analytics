@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ student.user.full_name }}{% endblock %}
+{% block content %}
+<h3 class="mb-1">{{ student.user.full_name }} <small class="text-muted">({{ student.roll_number }})</small></h3>
+<p class="text-muted">{{ student.course }} - Semester {{ student.semester }} - Section {{ student.section }}</p>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="text-muted">Overall %</div>
+            <h2>{{ summary.overall_percentage }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="text-muted">Attendance</div>
+            <h2>{{ summary.overall_attendance }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="text-muted">Risk Level</div>
+            <h2>
+                <span class="badge {{ 'badge-risk-high' if summary.risk_level == 'High' else ('badge-risk-medium' if summary.risk_level == 'Medium' else 'badge-risk-low') }}">
+                    {{ summary.risk_level }}
+                </span>
+            </h2>
+        </div>
+    </div>
+</div>
+
+<div class="card p-3">
+    <h6>Subject-wise Marks</h6>
+    <table class="table table-sm">
+        <thead><tr><th>Subject</th><th>Internal</th><th>External</th><th>Total</th><th>%</th><th>Grade</th></tr></thead>
+        <tbody>
+        {% for sub in summary.subjects %}
+            <tr>
+                <td>{{ sub.subject_name }}</td>
+                <td>{{ sub.internal_marks }}</td>
+                <td>{{ sub.external_marks }}</td>
+                <td>{{ sub.total_marks }}/{{ sub.max_marks }}</td>
+                <td>{{ sub.percentage }}%</td>
+                <td>{{ sub.grade }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

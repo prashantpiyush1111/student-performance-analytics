@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Manage Subjects{% endblock %}
+{% block content %}
+<h3 class="mb-4">Manage Subjects</h3>
+
+<div class="card p-3 mb-4">
+    <h6>Add New Subject</h6>
+    <form method="POST" class="row g-2">
+        <div class="col-md-2">
+            <input type="text" name="subject_code" class="form-control" placeholder="Code (e.g. PY101)" required>
+        </div>
+        <div class="col-md-3">
+            <input type="text" name="subject_name" class="form-control" placeholder="Subject Name" required>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="semester" class="form-control" placeholder="Semester">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="max_internal" class="form-control" placeholder="Max Internal (30)">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="max_external" class="form-control" placeholder="Max External (70)">
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary w-100">Add</button>
+        </div>
+    </form>
+    <small class="text-muted">Max internal + max external must total 100.</small>
+</div>
+
+<div class="card p-3">
+    <table class="table table-hover align-middle">
+        <thead><tr><th>Code</th><th>Name</th><th>Semester</th><th>Max Internal</th><th>Max External</th></tr></thead>
+        <tbody>
+        {% for s in subjects %}
+            <tr>
+                <td>{{ s.subject_code }}</td>
+                <td>{{ s.subject_name }}</td>
+                <td>{{ s.semester }}</td>
+                <td>{{ s.max_internal }}</td>
+                <td>{{ s.max_external }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5" class="text-muted text-center">No subjects yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

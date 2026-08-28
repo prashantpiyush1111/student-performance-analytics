@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Enter Marks{% endblock %}
+{% block content %}
+<h3 class="mb-4">Enter / Update Marks</h3>
+
+<div class="card p-3 mb-4">
+    <form method="POST" class="row g-2">
+        <div class="col-md-3">
+            <select name="student_id" class="form-select" required>
+                <option value="" disabled selected>Select Student</option>
+                {% for s in students %}
+                    <option value="{{ s.id }}">{{ s.roll_number }} - {{ s.user.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="subject_id" class="form-select" required>
+                <option value="" disabled selected>Select Subject</option>
+                {% for sub in subjects %}
+                    <option value="{{ sub.id }}">{{ sub.subject_name }} (Int: {{ sub.max_internal }} / Ext: {{ sub.max_external }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="number" step="0.5" name="internal_marks" class="form-control" placeholder="Internal Marks" required>
+        </div>
+        <div class="col-md-2">
+            <input type="number" step="0.5" name="external_marks" class="form-control" placeholder="External Marks" required>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card p-3">
+    <h6>Existing Marks</h6>
+    <table class="table table-sm table-hover">
+        <thead><tr><th>Roll No.</th><th>Student</th><th>Subject</th><th>Internal</th><th>External</th></tr></thead>
+        <tbody>
+        {% for m in existing_marks %}
+            <tr>
+                <td>{{ m.student.roll_number }}</td>
+                <td>{{ m.student.user.full_name }}</td>
+                <td>{{ m.subject.subject_name }}</td>
+                <td>{{ m.internal_marks }}</td>
+                <td>{{ m.external_marks }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5" class="text-muted text-center">No marks entered yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

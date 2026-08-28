@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="login-wrapper">
+    <div class="card p-4">
+        <h3 class="text-center mb-3">🎓 Login</h3>
+        <p class="text-muted text-center small">Student Performance & Academic Analytics System</p>
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <hr>
+        <p class="small text-muted mb-0">
+            Demo logins (after running <code>scripts/seed_data.py</code>):<br>
+            Admin: <code>admin / admin123</code><br>
+            Teacher: <code>teacher1 / teacher123</code><br>
+            Student: <code>student1 / student123</code>
+        </p>
+    </div>
+</div>
+{% endblock %}

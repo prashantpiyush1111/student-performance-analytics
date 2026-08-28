@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Teacher Dashboard{% endblock %}
+{% block content %}
+<h3 class="mb-4">Teacher Dashboard</h3>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">Total Students</div>
+            <h2>{{ overview.total_students }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">Class Avg. Marks</div>
+            <h2>{{ overview.avg_marks }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">Class Avg. Attendance</div>
+            <h2>{{ overview.avg_attendance }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">At-Risk Students</div>
+            <h2 class="text-danger">{{ overview.at_risk_count }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{{ url_for('teacher.enter_marks') }}" class="btn btn-primary me-2">Enter Marks</a>
+    <a href="{{ url_for('teacher.enter_attendance') }}" class="btn btn-secondary me-2">Enter Attendance</a>
+    <a href="{{ url_for('teacher.view_students') }}" class="btn btn-outline-dark">View Students</a>
+</div>
+{% endblock %}

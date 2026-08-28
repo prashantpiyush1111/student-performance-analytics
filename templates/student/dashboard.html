@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<h3 class="mb-1">Welcome, {{ student.user.full_name }} 👋</h3>
+<p class="text-muted">{{ student.roll_number }} - {{ student.course }} - Semester {{ student.semester }} - Section {{ student.section }}</p>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="text-muted">Overall Percentage</div>
+            <h2>{{ summary.overall_percentage }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="text-muted">Attendance</div>
+            <h2>{{ summary.overall_attendance }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="text-muted">Overall Grade</div>
+            <h2>{{ summary.overall_grade }}</h2>
+        </div>
+    </div>
+</div>
+
+{% if summary.risk_level in ['Medium', 'High'] %}
+<div class="alert alert-warning">
+    ⚠️ Your current risk level is <strong>{{ summary.risk_level }}</strong>. Consider improving your attendance and marks.
+</div>
+{% endif %}
+
+<div class="card p-3">
+    <h6>Subject-wise Performance</h6>
+    <table class="table table-sm">
+        <thead><tr><th>Subject</th><th>Internal</th><th>External</th><th>Total</th><th>%</th><th>Grade</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for sub in summary.subjects %}
+            <tr>
+                <td>{{ sub.subject_name }}</td>
+                <td>{{ sub.internal_marks }}</td>
+                <td>{{ sub.external_marks }}</td>
+                <td>{{ sub.total_marks }}/{{ sub.max_marks }}</td>
+                <td>{{ sub.percentage }}%</td>
+                <td>{{ sub.grade }}</td>
+                <td>
+                    <span class="badge {{ 'bg-success' if sub.pass_fail == 'Pass' else 'bg-danger' }}">{{ sub.pass_fail }}</span>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="7" class="text-muted text-center">No marks entered yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card p-3 mt-3">
+    <h6>Subject-wise Attendance</h6>
+    <table class="table table-sm">
+        <thead><tr><th>Subject</th><th>Total Classes</th><th>Attended</th><th>%</th></tr></thead>
+        <tbody>
+        {% for a in summary.attendance %}
+            <tr>
+                <td>{{ a.subject_name }}</td>
+                <td>{{ a.total_classes }}</td>
+                <td>{{ a.attended_classes }}</td>
+                <td>{{ a.attendance_percentage }}%</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4" class="text-muted text-center">No attendance recorded yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

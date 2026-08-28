@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h3 class="mb-4">Admin Dashboard</h3>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">Total Students</div>
+            <h2>{{ overview.total_students }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">Avg. Marks</div>
+            <h2>{{ overview.avg_marks }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">Avg. Attendance</div>
+            <h2>{{ overview.avg_attendance }}%</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="text-muted">At-Risk Students</div>
+            <h2 class="text-danger">{{ overview.at_risk_count }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h6>Grade Distribution</h6>
+            <img src="{{ url_for('static', filename=charts.grade_distribution) }}" class="img-fluid" alt="Grade distribution chart">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h6>Subject Averages</h6>
+            <img src="{{ url_for('static', filename=charts.subject_averages) }}" class="img-fluid" alt="Subject averages chart">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h6>Attendance vs Performance</h6>
+            <img src="{{ url_for('static', filename=charts.attendance_vs_performance) }}" class="img-fluid" alt="Attendance vs performance chart">
+        </div>
+    </div>
+</div>
+{% endblock %}

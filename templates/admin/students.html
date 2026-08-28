@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Manage Students{% endblock %}
+{% block content %}
+<h3 class="mb-4">Manage Students</h3>
+
+<div class="card p-3 mb-4">
+    <h6>Add New Student</h6>
+    <form method="POST" class="row g-2">
+        <div class="col-md-3">
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="col-md-3">
+            <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="roll_number" class="form-control" placeholder="Roll Number" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="course" class="form-control" placeholder="Course">
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="semester" class="form-control" placeholder="Sem">
+        </div>
+        <div class="col-md-1">
+            <input type="text" name="section" class="form-control" placeholder="Sec">
+        </div>
+        <div class="col-md-3 mt-2">
+            <input type="password" name="password" class="form-control" placeholder="Password (default: student123)">
+        </div>
+        <div class="col-md-2 mt-2">
+            <button type="submit" class="btn btn-primary w-100">Add Student</button>
+        </div>
+    </form>
+</div>
+
+<div class="card p-3">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Roll No.</th><th>Name</th><th>Course</th><th>Semester</th><th>Section</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for s in students %}
+            <tr>
+                <td>{{ s.roll_number }}</td>
+                <td>{{ s.user.full_name }}</td>
+                <td>{{ s.course }}</td>
+                <td>{{ s.semester }}</td>
+                <td>{{ s.section }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('admin.delete_student', student_id=s.id) }}"
+                          onsubmit="return confirm('Remove this student?');">
+                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6" class="text-muted text-center">No students yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

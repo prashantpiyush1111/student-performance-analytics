@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Students{% endblock %}
+{% block content %}
+<h3 class="mb-4">Students</h3>
+
+<div class="card p-3">
+    <table class="table table-hover align-middle">
+        <thead><tr><th>Roll No.</th><th>Name</th><th>Course</th><th>Semester</th><th>Section</th><th></th></tr></thead>
+        <tbody>
+        {% for s in students %}
+            <tr>
+                <td>{{ s.roll_number }}</td>
+                <td>{{ s.user.full_name }}</td>
+                <td>{{ s.course }}</td>
+                <td>{{ s.semester }}</td>
+                <td>{{ s.section }}</td>
+                <td><a href="{{ url_for('teacher.view_student', student_id=s.id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6" class="text-muted text-center">No students yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

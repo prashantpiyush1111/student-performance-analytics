@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Enter Attendance{% endblock %}
+{% block content %}
+<h3 class="mb-4">Enter / Update Attendance</h3>
+
+<div class="card p-3 mb-4">
+    <form method="POST" class="row g-2">
+        <div class="col-md-3">
+            <select name="student_id" class="form-select" required>
+                <option value="" disabled selected>Select Student</option>
+                {% for s in students %}
+                    <option value="{{ s.id }}">{{ s.roll_number }} - {{ s.user.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="subject_id" class="form-select" required>
+                <option value="" disabled selected>Select Subject</option>
+                {% for sub in subjects %}
+                    <option value="{{ sub.id }}">{{ sub.subject_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="total_classes" class="form-control" placeholder="Total Classes" required>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="attended_classes" class="form-control" placeholder="Attended Classes" required>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Save</button>
+        </div>
+    </form>
+</div>
+
+<div class="card p-3">
+    <h6>Existing Attendance</h6>
+    <table class="table table-sm table-hover">
+        <thead><tr><th>Roll No.</th><th>Subject</th><th>Total</th><th>Attended</th><th>%</th></tr></thead>
+        <tbody>
+        {% for a in existing_attendance %}
+            <tr>
+                <td>{{ a.student.roll_number }}</td>
+                <td>{{ a.subject.subject_name }}</td>
+                <td>{{ a.total_classes }}</td>
+                <td>{{ a.attended_classes }}</td>
+                <td>{{ ((a.attended_classes / a.total_classes * 100) | round(1)) if a.total_classes else 0 }}%</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5" class="text-muted text-center">No attendance entered yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
