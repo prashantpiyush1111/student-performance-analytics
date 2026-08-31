@@ -47,7 +47,22 @@ mysql -u root -p < schema.sql
 ```
 This creates the `student_analytics_db` database and all 6 tables.
 
-### 3. Set your MySQL password
+### 3. Configure the application environment
+Set a strong, unique `SECRET_KEY` before starting the application:
+
+```bash
+# Linux/macOS
+export SECRET_KEY="replace-with-a-long-random-secret"
+
+# Windows PowerShell
+$env:SECRET_KEY = "replace-with-a-long-random-secret"
+```
+
+For local development, the same environment variable can be set in a local
+`.env` file (which must not be committed) or in the shell before running the
+application. The application will refuse to start if `SECRET_KEY` is missing.
+
+### 4. Set your MySQL password
 Open `config.py` and change:
 ```python
 MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD", "your_mysql_password")
@@ -55,7 +70,7 @@ MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD", "your_mysql_password")
 to your actual MySQL root password. (Or set the `MYSQL_PASSWORD` environment
 variable instead of editing the file.)
 
-### 4. Load sample data (recommended for your demo)
+### 5. Load sample data (recommended for your demo)
 ```bash
 python scripts/seed_data.py
 ```
@@ -71,7 +86,7 @@ This creates:
 with 4 sample subjects and randomly-generated marks/attendance so every
 chart and report has something to show immediately.
 
-### 5. Run the app
+### 6. Run the app
 ```bash
 python app.py
 ```
@@ -88,7 +103,7 @@ Open **http://127.0.0.1:5000** in your browser.
    rows from MySQL, puts them in a DataFrame, and calculates percentage,
    grade, attendance %, and risk level (Low/Medium/High) using simple
    rules.
-- **`utils/charts.py`** uses Matplotlib + Seaborn to draw 3 charts (grade
+- **`utils/charts.py`** uses Matplotlib/Seaborn to draw 3 charts (grade
    distribution, subject averages, attendance-vs-performance) and saves
    them as PNG files that the dashboard displays with a normal `<img>` tag.
 - **`utils/reports.py`** exports the same Pandas DataFrames to CSV/Excel
