@@ -8,6 +8,10 @@ Edit MYSQL_USER / MYSQL_PASSWORD / MYSQL_DB to match your own MySQL setup.
 import os
 from urllib.parse import quote_plus
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class Config:
     # --- Change these to match your MySQL installation ---
@@ -24,9 +28,9 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # Secret key is used to keep login sessions secure. Change this before
-    # you actually deploy the project anywhere public.
-    SECRET_KEY = os.environ.get("SECRET_KEY", "change-this-secret-key-12345")
+    # Secret key is required explicitly so deployments cannot silently use
+    # a predictable, publicly known fallback value.
+    SECRET_KEY = os.environ.get("SECRET_KEY")
 
     # Where generated reports (CSV/Excel) and chart images get saved
     REPORTS_FOLDER = os.path.join(os.path.dirname(__file__), "reports_output")
