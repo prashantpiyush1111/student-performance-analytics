@@ -24,6 +24,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    if not app.config["SECRET_KEY"]:
+        raise RuntimeError("SECRET_KEY environment variable must be set")
+
     db.init_app(app)
 
     # --- Register route blueprints ---
